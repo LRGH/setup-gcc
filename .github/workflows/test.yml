@@ -35,8 +35,6 @@ jobs:
         exclude:
           - {os: ubuntu-18.04, version: 12}
           - {os: ubuntu-18.04, version: 13}
-          - {os: ubuntu-20.04, version: 4.8}
-          - {os: ubuntu-20.04, version: 5}
           - {os: ubuntu-20.04, version: 12}
           - {os: ubuntu-20.04, version: 13}
           - {os: ubuntu-22.04, version: 4.8}
