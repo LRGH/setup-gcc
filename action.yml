@@ -79,7 +79,13 @@ runs:
             }
         }
 
-        if ($linux_host) {
+        if ($linux_host -and $version -eq 6) {
+            $gcc = 'gcc-6'
+            $gxx = 'g++-6'
+            echo "deb http://dk.archive.ubuntu.com/ubuntu/ bionic main universe" | sudo tee -a /etc/apt/sources.list
+            sudo apt-get update
+            sudo apt-get install g++-6
+        } elseif ($linux_host) {
             $pkg = 'g++'
             $gcc = 'gcc'
             $gxx = 'g++'
