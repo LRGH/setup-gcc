@@ -7,14 +7,14 @@ This GitHub action sets up GCC in your workflow run.
 
 1. Installs either 32-bit or 64-bit GCC on either Ubuntu or Cygwin.
 2. Specify a version to install using the `version` parameter.
-3. For installing GCC on Windows please see my action [setup-mingw].
+3. For installing GCC on Windows please see egor-tensin action [setup-mingw].
 
 [setup-mingw]: https://github.com/egor-tensin/setup-mingw
 
 Use it in your workflow like this:
 
     - name: Set up GCC
-      uses: egor-tensin/setup-gcc@v1
+      uses: LRGH/setup-gcc@v1
       with:
         version: latest
         platform: x64
@@ -23,7 +23,7 @@ Use it in your workflow like this:
 * `x64` is the default value for the `platform` parameter and can be omitted.
 Use `x86` if you want to build 32-bit binaries.
 * Set the `cygwin` parameter to `1` to set up GCC inside an existing Cygwin
-installation (you can set up Cygwin itself using my action [setup-cygwin]).
+installation (you can set up Cygwin itself using egor-tensin action [setup-cygwin]).
 * `cc` and `c++` executables are set up, pointing to the `gcc` and `g++`
 executables.
 Disable this by setting the `cc` parameter to `0`.
