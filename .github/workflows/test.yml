@@ -32,7 +32,7 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-20.04, ubuntu-22.04]
-        version: [4.6, 4.8, 5, 6, 7, 8, 9, 10, 11, 12, 13]
+        version: [4.4, 4.6, 4.8, 5, 6, 7, 8, 9, 10, 11, 12, 13]
         exclude:
           - {os: ubuntu-18.04, version: 12}
           - {os: ubuntu-18.04, version: 13}
@@ -51,18 +51,18 @@ jobs:
           platform: '${{ matrix.platform }}'
           cc: 1
       - name: Build foo.exe
-        if: matrix.version != 4.6
+        if: ${{ matrix.version > 4.6 }}
         uses: ./.github/actions/build-foo
         with:
           version: '${{ matrix.version }}'
       - name: Run foo.exe
-        if: matrix.version != 4.6
+        if: ${{ matrix.version > 4.6 }}
         uses: ./.github/actions/run-foo
       - name: Build and run foo
-        if: matrix.version == 4.6
+        if: ${{ matrix.version <= 4.6 }}
         run: |
           echo 'int main() { return 0; }' > a.c
-          gcc-4.6 -o a.out a.c
+          gcc-${{ matrix.version }} -o a.out a.c
           ./a.out
       - name: Check symlinks
         uses: ./.github/actions/check-cc
