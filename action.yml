@@ -76,7 +76,19 @@ runs:
             if ($script:linux_host) {
                 $VERSION_ID = (echo 'source /etc/os-release; echo "$VERSION_ID"' | bash)
             }
-            if ($script:linux_host -and $script:version -eq "4.8") {
+            if ($script:linux_host -and $script:version -eq "4.6") {
+                sudo apt-get update
+                mkdir install_g++-4.6
+                cd install_g++-4.6/
+                wget http://mirrors.kernel.org/ubuntu/pool/universe/g/gcc-4.6/g++-4.6_4.6.4-6ubuntu2_amd64.deb
+                wget http://mirrors.kernel.org/ubuntu/pool/universe/g/gcc-4.6/libstdc++6-4.6-dev_4.6.4-6ubuntu2_amd64.deb
+                wget http://mirrors.kernel.org/ubuntu/pool/universe/g/gcc-4.6/gcc-4.6-base_4.6.4-6ubuntu2_amd64.deb
+                wget http://mirrors.kernel.org/ubuntu/pool/universe/g/gcc-4.6/gcc-4.6_4.6.4-6ubuntu2_amd64.deb
+                wget http://mirrors.kernel.org/ubuntu/pool/universe/g/gcc-4.6/cpp-4.6_4.6.4-6ubuntu2_amd64.deb
+                wget https://mirrors.edge.kernel.org/ubuntu/pool/main/m/mpfr4/libmpfr4_3.1.2-1_amd64.deb
+                wget https://mirrors.edge.kernel.org/ubuntu/pool/main/g/glibc/multiarch-support_2.27-3ubuntu1.6_amd64.deb
+                sudo apt-get install ./g++-4.6_4.6.4-6ubuntu2_amd64.deb ./libstdc++6-4.6-dev_4.6.4-6ubuntu2_amd64.deb ./gcc-4.6-base_4.6.4-6ubuntu2_amd64.deb ./gcc-4.6_4.6.4-6ubuntu2_amd64.deb ./cpp-4.6_4.6.4-6ubuntu2_amd64.deb ./libmpfr4_3.1.2-1_amd64.deb ./multiarch-support_2.27-3ubuntu1.6_amd64.deb
+            } elseif ($script:linux_host -and $script:version -eq "4.8") {
                 sudo apt-get update
                 mkdir install_g++-4.8
                 cd install_g++-4.8/
