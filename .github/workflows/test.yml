@@ -39,6 +39,8 @@ jobs:
           - {os: ubuntu-20.04, version: 12}
           - {os: ubuntu-20.04, version: 13}
           - {os: ubuntu-22.04, version: 8}
+          - {os: ubuntu-22.04, version: 4.4}
+          - {os: ubuntu-22.04, version: 4.6}
     runs-on: '${{ matrix.os }}'
     name: 'Version: ${{ matrix.os }} / ${{ matrix.version }}'
     steps:
@@ -64,6 +66,13 @@ jobs:
           echo 'int main() { return 0; }' > a.c
           gcc-${{ matrix.version }} -o a.out a.c
           ./a.out
+      - name: Test with zlib 1.2.8
+        run: |
+          curl -O https://zlib.net/fossils/zlib-1.2.8.tar.gz
+          tar xzf zlib-1.2.8.tar.gz
+          cd zlib-1.2.8
+          env CC='gcc-${{ matrix.version }}' ./configure
+          make clean; make test CC='gcc-${{ matrix.version }}'
       - name: Check symlinks
         uses: ./.github/actions/check-cc
         with:
