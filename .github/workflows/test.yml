@@ -5,6 +5,64 @@ on:
   pull_request:
 
 jobs:
+  versions:
+    strategy:
+      fail-fast: false
+      matrix:
+        platform: [x86, x64]
+        os: [ubuntu-20.04, ubuntu-22.04]
+        version: [4.4, 4.6, 4.8, 5, 6, 7, 8, 9, 10, 11, 12, 13, latest]
+        exclude:
+          - {os: ubuntu-18.04, version: 12}
+          - {os: ubuntu-18.04, version: 13}
+          - {os: ubuntu-20.04, version: 12}
+          - {os: ubuntu-20.04, version: 13}
+          - {os: ubuntu-22.04, version: 8}
+          - {os: ubuntu-22.04, version: 4.4}
+          - {os: ubuntu-22.04, version: 4.6}
+          - {platform: x86, version: 4.6}
+          - {platform: x86, version: 4.8}
+          - {platform: x86, version: 5}
+          - {platform: x86, version: 6}
+          - {platform: x86, version: 7}
+          - {platform: x86, version: 8}
+          - {platform: x86, version: 9}
+          - {platform: x86, version: 10}
+          - {platform: x86, version: 11}
+          - {platform: x86, version: 12}
+          - {platform: x86, version: 13}
+          # there is a difference to investigate between "latest" and the actual gcc version corresponding to latest: 32-bit compilation does not work!
+    runs-on: '${{ matrix.os }}'
+    name: '${{ matrix.os }} / gcc ${{ matrix.version }} ${{ matrix.platform }}'
+    env:
+      PLATFORM: ${{ matrix.platform }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Set up GCC
+        uses: ./
+        with:
+          version: '${{ matrix.version }}'
+          platform: '${{ matrix.platform }}'
+          cc: 1
+      - name: Build and run minimal program
+        run: |
+          gcc --version
+          echo 'int main() { return 0; }' > a.c
+          if test 'x86' = $PLATFORM; then flags=-m32; else flags=; fi
+          gcc $flags -o a.out a.c
+          file a.out
+          ./a.out
+      - name: Build and test zlib 1.2.8
+        run: |
+          curl -O https://zlib.net/fossils/zlib-1.2.8.tar.gz
+          tar xzf zlib-1.2.8.tar.gz
+          cd zlib-1.2.8
+          ./configure
+          flags="-O3 -D_LARGEFILE64_SOURCE=1 -DHAVE_HIDDEN"
+          if test 'x86' = $PLATFORM; then flags="-m32 $flags"; fi
+          make clean; make test CFLAGS="$flags" SFLAGS="-fPIC $flags"
+
   ubuntu:
     strategy:
       matrix:
@@ -27,57 +85,6 @@ jobs:
       - name: Check symlinks
         uses: ./.github/actions/check-cc
 
-  versions:
-    strategy:
-      fail-fast: false
-      matrix:
-        os: [ubuntu-20.04, ubuntu-22.04]
-        version: [4.4, 4.6, 4.8, 5, 6, 7, 8, 9, 10, 11, 12, 13]
-        exclude:
-          - {os: ubuntu-18.04, version: 12}
-          - {os: ubuntu-18.04, version: 13}
-          - {os: ubuntu-20.04, version: 12}
-          - {os: ubuntu-20.04, version: 13}
-          - {os: ubuntu-22.04, version: 8}
-          - {os: ubuntu-22.04, version: 4.4}
-          - {os: ubuntu-22.04, version: 4.6}
-    runs-on: '${{ matrix.os }}'
-    name: 'Version: ${{ matrix.os }} / ${{ matrix.version }}'
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-      - name: Set up GCC
-        uses: ./
-        with:
-          version: '${{ matrix.version }}'
-          platform: '${{ matrix.platform }}'
-          cc: 1
-      - name: Build foo.exe
-        if: ${{ matrix.version > 4.6 }}
-        uses: ./.github/actions/build-foo
-        with:
-          version: '${{ matrix.version }}'
-      - name: Run foo.exe
-        if: ${{ matrix.version > 4.6 }}
-        uses: ./.github/actions/run-foo
-      - name: Build and run foo
-        if: ${{ matrix.version <= 4.6 }}
-        run: |
-          echo 'int main() { return 0; }' > a.c
-          gcc-${{ matrix.version }} -o a.out a.c
-          ./a.out
-      - name: Test with zlib 1.2.8
-        run: |
-          curl -O https://zlib.net/fossils/zlib-1.2.8.tar.gz
-          tar xzf zlib-1.2.8.tar.gz
-          cd zlib-1.2.8
-          env CC='gcc-${{ matrix.version }}' ./configure
-          make clean; make test CC='gcc-${{ matrix.version }}'
-      - name: Check symlinks
-        uses: ./.github/actions/check-cc
-        with:
-          version: '${{ matrix.version }}'
-
   cygwin:
     strategy:
       matrix:
@@ -86,7 +93,7 @@ jobs:
     name: 'Cygwin: hardlinks${{ matrix.hardlinks }}'
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Clean up PATH
         uses: egor-tensin/cleanup-path@v3
       - name: Install Cygwin

@@ -85,9 +85,11 @@ runs:
                 wget http://mirrors.edge.kernel.org/ubuntu/pool/universe/g/gcc-4.4/gcc-4.4-base_4.4.7-8ubuntu1_amd64.deb
                 wget http://mirrors.edge.kernel.org/ubuntu/pool/universe/g/gcc-4.4/gcc-4.4_4.4.7-8ubuntu1_amd64.deb
                 wget http://mirrors.edge.kernel.org/ubuntu/pool/universe/g/gcc-4.4/cpp-4.4_4.4.7-8ubuntu1_amd64.deb
+                wget http://mirrors.edge.kernel.org/ubuntu/pool/universe/g/gcc-4.4/gcc-4.4-multilib_4.4.7-8ubuntu1_amd64.deb
+                wget http://mirrors.edge.kernel.org/ubuntu/pool/main/g/gcc-10/lib32gcc1_10.5.0-1ubuntu1~20.04_amd64.deb
                 wget https://mirrors.edge.kernel.org/ubuntu/pool/main/m/mpfr4/libmpfr4_3.1.2-1_amd64.deb
                 wget https://mirrors.edge.kernel.org/ubuntu/pool/main/g/glibc/multiarch-support_2.27-3ubuntu1.6_amd64.deb
-                sudo apt-get install ./g++-4.4_4.4.7-8ubuntu1_amd64.deb ./libstdc++6-4.4-dev_4.4.7-8ubuntu1_amd64.deb ./gcc-4.4-base_4.4.7-8ubuntu1_amd64.deb ./gcc-4.4_4.4.7-8ubuntu1_amd64.deb ./cpp-4.4_4.4.7-8ubuntu1_amd64.deb ./libmpfr4_3.1.2-1_amd64.deb ./multiarch-support_2.27-3ubuntu1.6_amd64.deb
+                sudo apt-get install ./g++-4.4_4.4.7-8ubuntu1_amd64.deb ./libstdc++6-4.4-dev_4.4.7-8ubuntu1_amd64.deb ./gcc-4.4-base_4.4.7-8ubuntu1_amd64.deb ./gcc-4.4_4.4.7-8ubuntu1_amd64.deb ./cpp-4.4_4.4.7-8ubuntu1_amd64.deb ./gcc-4.4-multilib_4.4.7-8ubuntu1_amd64.deb ./lib32gcc1_10.5.0-1ubuntu1~20.04_amd64.deb ./libmpfr4_3.1.2-1_amd64.deb ./multiarch-support_2.27-3ubuntu1.6_amd64.deb
             } elseif ($script:linux_host -and $script:version -eq "4.6") {
                 sudo apt-get update
                 mkdir install_g++-4.6
