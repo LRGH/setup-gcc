@@ -34,7 +34,142 @@ outputs:
 runs:
   using: composite
   steps:
-    - id: install
+
+    - if: ${{ runner.os == 'Linux' && inputs.version == '4.4' }}
+      shell: bash
+      run: |
+        sudo apt-get update
+        mkdir install-gcc-${{ inputs.version }}
+        cd install-gcc-${{ inputs.version }}
+        wget http://mirrors.kernel.org/ubuntu/pool/universe/g/gcc-4.4/g++-4.4_4.4.7-8ubuntu1_amd64.deb
+        wget http://mirrors.kernel.org/ubuntu/pool/universe/g/gcc-4.4/libstdc++6-4.4-dev_4.4.7-8ubuntu1_amd64.deb
+        wget http://mirrors.kernel.org/ubuntu/pool/universe/g/gcc-4.4/gcc-4.4-base_4.4.7-8ubuntu1_amd64.deb
+        wget http://mirrors.kernel.org/ubuntu/pool/universe/g/gcc-4.4/gcc-4.4_4.4.7-8ubuntu1_amd64.deb
+        wget http://mirrors.kernel.org/ubuntu/pool/universe/g/gcc-4.4/cpp-4.4_4.4.7-8ubuntu1_amd64.deb
+        wget http://mirrors.kernel.org/ubuntu/pool/universe/g/gcc-4.4/gcc-4.4-multilib_4.4.7-8ubuntu1_amd64.deb
+        wget http://mirrors.kernel.org/ubuntu/pool/main/g/gcc-10/lib32gcc1_10.5.0-1ubuntu1~20.04_amd64.deb
+        wget http://mirrors.kernel.org/ubuntu/pool/main/m/mpfr4/libmpfr4_3.1.2-1_amd64.deb
+        wget http://mirrors.kernel.org/ubuntu/pool/main/g/glibc/multiarch-support_2.27-3ubuntu1.6_amd64.deb
+        sudo apt-get install ./g++-4.4_4.4.7-8ubuntu1_amd64.deb ./libstdc++6-4.4-dev_4.4.7-8ubuntu1_amd64.deb ./gcc-4.4-base_4.4.7-8ubuntu1_amd64.deb ./gcc-4.4_4.4.7-8ubuntu1_amd64.deb ./cpp-4.4_4.4.7-8ubuntu1_amd64.deb ./gcc-4.4-multilib_4.4.7-8ubuntu1_amd64.deb ./lib32gcc1_10.5.0-1ubuntu1~20.04_amd64.deb ./libmpfr4_3.1.2-1_amd64.deb ./multiarch-support_2.27-3ubuntu1.6_amd64.deb
+
+    - if: ${{ runner.os == 'Linux' && inputs.version == '4.6' }}
+      shell: bash
+      run: |
+        sudo apt-get update
+        mkdir install-gcc-${{ inputs.version }}
+        cd install-gcc-${{ inputs.version }}
+        wget http://mirrors.kernel.org/ubuntu/pool/universe/g/gcc-4.6/g++-4.6_4.6.4-6ubuntu2_amd64.deb
+        wget http://mirrors.kernel.org/ubuntu/pool/universe/g/gcc-4.6/libstdc++6-4.6-dev_4.6.4-6ubuntu2_amd64.deb
+        wget http://mirrors.kernel.org/ubuntu/pool/universe/g/gcc-4.6/gcc-4.6-base_4.6.4-6ubuntu2_amd64.deb
+        wget http://mirrors.kernel.org/ubuntu/pool/universe/g/gcc-4.6/gcc-4.6_4.6.4-6ubuntu2_amd64.deb
+        wget http://mirrors.kernel.org/ubuntu/pool/universe/g/gcc-4.6/cpp-4.6_4.6.4-6ubuntu2_amd64.deb
+        wget http://mirrors.kernel.org/ubuntu/pool/universe/g/gcc-4.6/gcc-4.6-multilib_4.6.4-6ubuntu2_amd64.deb
+        wget http://archive.ubuntu.com/ubuntu/pool/main/g/gcc-10/lib32gcc1_10.5.0-1ubuntu1~20.04_amd64.deb
+        wget http://mirrors.kernel.org/ubuntu/pool/main/m/mpfr4/libmpfr4_3.1.2-1_amd64.deb
+        wget http://mirrors.kernel.org/ubuntu/pool/main/g/glibc/multiarch-support_2.27-3ubuntu1.6_amd64.deb
+        sudo apt-get install ./g++-4.6_4.6.4-6ubuntu2_amd64.deb ./libstdc++6-4.6-dev_4.6.4-6ubuntu2_amd64.deb ./gcc-4.6-base_4.6.4-6ubuntu2_amd64.deb ./gcc-4.6_4.6.4-6ubuntu2_amd64.deb ./cpp-4.6_4.6.4-6ubuntu2_amd64.deb ./gcc-4.6-multilib_4.6.4-6ubuntu2_amd64.deb ./lib32gcc1_10.5.0-1ubuntu1~20.04_amd64.deb ./libmpfr4_3.1.2-1_amd64.deb ./multiarch-support_2.27-3ubuntu1.6_amd64.deb
+
+    - if: ${{ runner.os == 'Linux' && inputs.version == '4.8' }}
+      shell: bash
+      run: |
+        sudo apt-get update
+        mkdir install-gcc-${{ inputs.version }}
+        cd install-gcc-${{ inputs.version }}
+        wget http://mirrors.kernel.org/ubuntu/pool/universe/g/gcc-4.8/g++-4.8_4.8.5-4ubuntu8_amd64.deb
+        wget http://mirrors.kernel.org/ubuntu/pool/universe/g/gcc-4.8/libstdc++-4.8-dev_4.8.5-4ubuntu8_amd64.deb
+        wget http://mirrors.kernel.org/ubuntu/pool/universe/g/gcc-4.8/gcc-4.8-base_4.8.5-4ubuntu8_amd64.deb
+        wget http://mirrors.kernel.org/ubuntu/pool/universe/g/gcc-4.8/gcc-4.8_4.8.5-4ubuntu8_amd64.deb
+        wget http://mirrors.kernel.org/ubuntu/pool/universe/g/gcc-4.8/libgcc-4.8-dev_4.8.5-4ubuntu8_amd64.deb
+        wget http://mirrors.kernel.org/ubuntu/pool/universe/g/gcc-4.8/cpp-4.8_4.8.5-4ubuntu8_amd64.deb
+        wget http://mirrors.kernel.org/ubuntu/pool/universe/g/gcc-4.8/libasan0_4.8.5-4ubuntu8_amd64.deb
+        sudo apt-get install ./gcc-4.8_4.8.5-4ubuntu8_amd64.deb ./gcc-4.8-base_4.8.5-4ubuntu8_amd64.deb ./libstdc++-4.8-dev_4.8.5-4ubuntu8_amd64.deb ./cpp-4.8_4.8.5-4ubuntu8_amd64.deb ./libgcc-4.8-dev_4.8.5-4ubuntu8_amd64.deb ./libasan0_4.8.5-4ubuntu8_amd64.deb ./g++-4.8_4.8.5-4ubuntu8_amd64.deb
+
+    - if: ${{ runner.os == 'Linux' && inputs.version == '5' }}
+      shell: bash
+      run: |
+        sudo apt-get update
+        mkdir install-gcc-${{ inputs.version }}
+        cd install-gcc-${{ inputs.version }}
+        wget http://mirrors.kernel.org/ubuntu/pool/universe/g/gcc-5/g++-5_5.5.0-12ubuntu1_amd64.deb
+        wget http://mirrors.kernel.org/ubuntu/pool/universe/g/gcc-5/libstdc++-5-dev_5.5.0-12ubuntu1_amd64.deb
+        wget http://mirrors.kernel.org/ubuntu/pool/universe/g/gcc-5/gcc-5-base_5.5.0-12ubuntu1_amd64.deb
+        wget http://mirrors.kernel.org/ubuntu/pool/universe/g/gcc-5/gcc-5_5.5.0-12ubuntu1_amd64.deb
+        wget http://mirrors.kernel.org/ubuntu/pool/universe/g/gcc-5/libgcc-5-dev_5.5.0-12ubuntu1_amd64.deb
+        wget http://mirrors.kernel.org/ubuntu/pool/universe/g/gcc-5/cpp-5_5.5.0-12ubuntu1_amd64.deb
+        wget http://mirrors.kernel.org/ubuntu/pool/universe/g/gcc-5/libasan2_5.5.0-12ubuntu1_amd64.deb
+        wget http://mirrors.kernel.org/ubuntu/pool/universe/g/gcc-7/libubsan0_7.5.0-6ubuntu2_amd64.deb
+        wget http://mirrors.kernel.org/ubuntu/pool/universe/g/gcc-7/libcilkrts5_7.5.0-6ubuntu2_amd64.deb
+        wget http://mirrors.kernel.org/ubuntu/pool/universe/g/gcc-7/gcc-7-base_7.5.0-6ubuntu2_amd64.deb
+        wget http://mirrors.kernel.org/ubuntu/pool/universe/i/isl-0.18/libisl15_0.18-4_amd64.deb
+        wget http://mirrors.kernel.org/ubuntu/pool/universe/g/gcc-5/libmpx0_5.5.0-12ubuntu1_amd64.deb
+        sudo apt-get install ./gcc-5_5.5.0-12ubuntu1_amd64.deb ./gcc-5-base_5.5.0-12ubuntu1_amd64.deb ./libstdc++-5-dev_5.5.0-12ubuntu1_amd64.deb ./cpp-5_5.5.0-12ubuntu1_amd64.deb ./libgcc-5-dev_5.5.0-12ubuntu1_amd64.deb ./libasan2_5.5.0-12ubuntu1_amd64.deb ./g++-5_5.5.0-12ubuntu1_amd64.deb ./libubsan0_7.5.0-6ubuntu2_amd64.deb ./libcilkrts5_7.5.0-6ubuntu2_amd64.deb ./gcc-7-base_7.5.0-6ubuntu2_amd64.deb ./libisl15_0.18-4_amd64.deb ./libmpx0_5.5.0-12ubuntu1_amd64.deb
+
+    - if: ${{ runner.os == 'Linux' && inputs.version == '6' }}
+      shell: bash
+      run: |
+        sudo apt-get update
+        mkdir install-gcc-${{ inputs.version }}
+        cd install-gcc-${{ inputs.version }}
+        wget http://mirrors.kernel.org/ubuntu/pool/universe/g/gcc-6/g++-6_6.4.0-17ubuntu1_amd64.deb
+        wget http://mirrors.kernel.org/ubuntu/pool/universe/g/gcc-6/libstdc++-6-dev_6.4.0-17ubuntu1_amd64.deb
+        wget http://mirrors.kernel.org/ubuntu/pool/universe/g/gcc-6/gcc-6-base_6.4.0-17ubuntu1_amd64.deb
+        wget http://mirrors.kernel.org/ubuntu/pool/universe/g/gcc-6/gcc-6_6.4.0-17ubuntu1_amd64.deb
+        wget http://mirrors.kernel.org/ubuntu/pool/universe/g/gcc-6/libgcc-6-dev_6.4.0-17ubuntu1_amd64.deb
+        wget http://mirrors.kernel.org/ubuntu/pool/universe/g/gcc-6/cpp-6_6.4.0-17ubuntu1_amd64.deb
+        wget http://mirrors.kernel.org/ubuntu/pool/universe/g/gcc-6/libasan3_6.4.0-17ubuntu1_amd64.deb
+        wget http://mirrors.kernel.org/ubuntu/pool/universe/g/gcc-7/gcc-7-base_7.5.0-6ubuntu2_amd64.deb
+        wget http://mirrors.kernel.org/ubuntu/pool/universe/g/gcc-7/libubsan0_7.5.0-6ubuntu2_amd64.deb
+        wget http://mirrors.kernel.org/ubuntu/pool/universe/g/gcc-7/libcilkrts5_7.5.0-6ubuntu2_amd64.deb
+        wget http://mirrors.kernel.org/ubuntu/pool/main/i/isl/libisl19_0.19-1_amd64.deb
+        wget http://mirrors.kernel.org/ubuntu/pool/main/i/isl/libisl22_0.22.1-1_amd64.deb
+        wget http://mirrors.kernel.org/ubuntu/pool/main/g/gcc-8/gcc-8-base_8.4.0-1ubuntu1~18.04_amd64.deb
+        wget http://mirrors.kernel.org/ubuntu/pool/main/g/gcc-8/libmpx2_8.4.0-1ubuntu1~18.04_amd64.deb
+        sudo apt-get install ./g++-6_6.4.0-17ubuntu1_amd64.deb ./libstdc++-6-dev_6.4.0-17ubuntu1_amd64.deb ./gcc-6-base_6.4.0-17ubuntu1_amd64.deb ./gcc-6_6.4.0-17ubuntu1_amd64.deb ./libgcc-6-dev_6.4.0-17ubuntu1_amd64.deb ./cpp-6_6.4.0-17ubuntu1_amd64.deb ./libasan3_6.4.0-17ubuntu1_amd64.deb ./gcc-7-base_7.5.0-6ubuntu2_amd64.deb ./libubsan0_7.5.0-6ubuntu2_amd64.deb ./libcilkrts5_7.5.0-6ubuntu2_amd64.deb ./libisl19_0.19-1_amd64.deb ./gcc-8-base_8.4.0-1ubuntu1~18.04_amd64.deb ./libmpx2_8.4.0-1ubuntu1~18.04_amd64.deb
+
+    - if: ${{ runner.os == 'Linux' && inputs.version == '7' }}
+      shell: bash
+      run: |
+        sudo apt-get update
+        mkdir install-gcc-${{ inputs.version }}
+        cd install-gcc-${{ inputs.version }}
+        wget http://mirrors.kernel.org/ubuntu/pool/universe/g/gcc-7/g++-7_7.5.0-6ubuntu2_amd64.deb
+        wget http://mirrors.kernel.org/ubuntu/pool/universe/g/gcc-7/libstdc++-7-dev_7.5.0-6ubuntu2_amd64.deb
+        wget http://mirrors.kernel.org/ubuntu/pool/universe/g/gcc-7/gcc-7-base_7.5.0-6ubuntu2_amd64.deb
+        wget http://mirrors.kernel.org/ubuntu/pool/universe/g/gcc-7/gcc-7_7.5.0-6ubuntu2_amd64.deb
+        wget http://mirrors.kernel.org/ubuntu/pool/universe/g/gcc-7/libgcc-7-dev_7.5.0-6ubuntu2_amd64.deb
+        wget http://mirrors.kernel.org/ubuntu/pool/universe/g/gcc-7/cpp-7_7.5.0-6ubuntu2_amd64.deb
+        wget http://mirrors.kernel.org/ubuntu/pool/universe/g/gcc-7/libasan4_7.5.0-6ubuntu2_amd64.deb
+        wget http://mirrors.kernel.org/ubuntu/pool/universe/g/gcc-7/libubsan0_7.5.0-6ubuntu2_amd64.deb
+        wget http://mirrors.kernel.org/ubuntu/pool/universe/g/gcc-7/libcilkrts5_7.5.0-6ubuntu2_amd64.deb
+        wget http://mirrors.kernel.org/ubuntu/pool/universe/g/gcc-7/gcc-7-base_7.5.0-6ubuntu2_amd64.deb
+        wget http://mirrors.kernel.org/ubuntu/pool/main/i/isl/libisl22_0.22.1-1_amd64.deb
+        wget http://mirrors.kernel.org/ubuntu/pool/main/g/gcc-8/gcc-8-base_8.4.0-1ubuntu1~18.04_amd64.deb
+        wget http://mirrors.kernel.org/ubuntu/pool/main/g/gcc-8/libmpx2_8.4.0-1ubuntu1~18.04_amd64.deb
+        sudo apt-get install ./g++-7_7.5.0-6ubuntu2_amd64.deb ./libstdc++-7-dev_7.5.0-6ubuntu2_amd64.deb ./gcc-7-base_7.5.0-6ubuntu2_amd64.deb ./gcc-7_7.5.0-6ubuntu2_amd64.deb ./libgcc-7-dev_7.5.0-6ubuntu2_amd64.deb ./cpp-7_7.5.0-6ubuntu2_amd64.deb ./libasan4_7.5.0-6ubuntu2_amd64.deb ./libubsan0_7.5.0-6ubuntu2_amd64.deb ./libcilkrts5_7.5.0-6ubuntu2_amd64.deb ./gcc-7-base_7.5.0-6ubuntu2_amd64.deb ./libisl22_0.22.1-1_amd64.deb ./gcc-8-base_8.4.0-1ubuntu1~18.04_amd64.deb ./libmpx2_8.4.0-1ubuntu1~18.04_amd64.deb
+
+    # Cannot find the required dependencies
+    - if: false # ${{ runner.os == 'Linux' && inputs.version == '8' }}
+      shell: bash
+      run: |
+        sudo apt-get update
+        mkdir install-gcc-${{ inputs.version }}
+        cd install-gcc-${{ inputs.version }}
+        wget https://old-releases.ubuntu.com/ubuntu/pool/universe/g/gcc-8/g++-8_8.4.0-7ubuntu3_amd64.deb
+        wget https://old-releases.ubuntu.com/ubuntu/pool/universe/g/gcc-8/libstdc++-8-dev_8.4.0-7ubuntu3_amd64.deb
+        wget https://old-releases.ubuntu.com/ubuntu/pool/universe/g/gcc-8/gcc-8-base_8.4.0-7ubuntu3_amd64.deb
+        wget https://old-releases.ubuntu.com/ubuntu/pool/universe/g/gcc-8/gcc-8_8.4.0-7ubuntu3_amd64.deb
+        wget https://old-releases.ubuntu.com/ubuntu/pool/universe/g/gcc-8/libgcc-8-dev_8.4.0-7ubuntu3_amd64.deb
+        wget https://old-releases.ubuntu.com/ubuntu/pool/universe/g/gcc-8/cpp-8_8.4.0-7ubuntu3_amd64.deb
+        wget http://archive.ubuntu.com/ubuntu/pool/main/g/glibc/libc6_2.35-0ubuntu3_amd64.deb
+        # Cannot find version 8.4.0 of libubsan1
+        wget https://old-releases.ubuntu.com/ubuntu/pool/universe/g/gcc-8/libubsan1-dbg_8.2.0-7ubuntu1_amd64.deb
+        wget https://old-releases.ubuntu.com/ubuntu/pool/universe/g/gcc-8/libmpx2_8.4.0-7ubuntu3_amd64.deb
+        wget http://mirrors.kernel.org/ubuntu/pool/main/i/isl/libisl22_0.22.1-1_amd64.deb
+        wget http://mirrors.kernel.org/ubuntu/pool/main/i/isl/libisl23_0.26-3_amd64.deb
+        sudo apt-get install ./g++-8_8.4.0-7ubuntu3_amd64.deb ./libstdc++-8-dev_8.4.0-7ubuntu3_amd64.deb ./gcc-8-base_8.4.0-7ubuntu3_amd64.deb ./gcc-8_8.4.0-7ubuntu3_amd64.deb ./libgcc-8-dev_8.4.0-7ubuntu3_amd64.deb ./cpp-8_8.4.0-7ubuntu3_amd64.deb ./libc6_2.35-0ubuntu3_amd64.deb ./libubsan1-dbg_8.2.0-7ubuntu1_amd64.deb ./libmpx2_8.4.0-7ubuntu3_amd64.deb ./libisl22_0.22.1-1_amd64.deb ./libisl23_0.26-3_amd64.deb
+
+    - if: ${{ ! (inputs.version <= 7) }}
+      id: install
       run: |
         New-Variable os -Value '${{ runner.os }}' -Option Constant
 
@@ -56,15 +191,7 @@ runs:
         }
 
         function Enable-TestingPPA {
-            if ($script:version -eq "4.8") {
-                true
-            } elseif ($script:version -eq 5) {
-                echo "deb http://dk.archive.ubuntu.com/ubuntu/ xenial main universe" | sudo tee -a /etc/apt/sources.list
-            } elseif ($script:version -eq 6) {
-                echo "deb http://dk.archive.ubuntu.com/ubuntu/ bionic main universe" | sudo tee -a /etc/apt/sources.list
-            } else {
-                sudo add-apt-repository --yes --update ppa:ubuntu-toolchain-r/test
-            }
+            sudo add-apt-repository --yes --update ppa:ubuntu-toolchain-r/test
         }
 
         function Install-Package {
@@ -75,115 +202,6 @@ runs:
 
             if ($script:linux_host) {
                 $VERSION_ID = (echo 'source /etc/os-release; echo "$VERSION_ID"' | bash)
-            }
-            if ($script:linux_host -and $script:version -eq "4.4") {
-                sudo apt-get update
-                mkdir install_g++-4.4
-                cd install_g++-4.4/
-                wget http://mirrors.edge.kernel.org/ubuntu/pool/universe/g/gcc-4.4/g++-4.4_4.4.7-8ubuntu1_amd64.deb
-                wget http://mirrors.edge.kernel.org/ubuntu/pool/universe/g/gcc-4.4/libstdc++6-4.4-dev_4.4.7-8ubuntu1_amd64.deb
-                wget http://mirrors.edge.kernel.org/ubuntu/pool/universe/g/gcc-4.4/gcc-4.4-base_4.4.7-8ubuntu1_amd64.deb
-                wget http://mirrors.edge.kernel.org/ubuntu/pool/universe/g/gcc-4.4/gcc-4.4_4.4.7-8ubuntu1_amd64.deb
-                wget http://mirrors.edge.kernel.org/ubuntu/pool/universe/g/gcc-4.4/cpp-4.4_4.4.7-8ubuntu1_amd64.deb
-                wget http://mirrors.edge.kernel.org/ubuntu/pool/universe/g/gcc-4.4/gcc-4.4-multilib_4.4.7-8ubuntu1_amd64.deb
-                wget http://mirrors.edge.kernel.org/ubuntu/pool/main/g/gcc-10/lib32gcc1_10.5.0-1ubuntu1~20.04_amd64.deb
-                wget https://mirrors.edge.kernel.org/ubuntu/pool/main/m/mpfr4/libmpfr4_3.1.2-1_amd64.deb
-                wget https://mirrors.edge.kernel.org/ubuntu/pool/main/g/glibc/multiarch-support_2.27-3ubuntu1.6_amd64.deb
-                sudo apt-get install ./g++-4.4_4.4.7-8ubuntu1_amd64.deb ./libstdc++6-4.4-dev_4.4.7-8ubuntu1_amd64.deb ./gcc-4.4-base_4.4.7-8ubuntu1_amd64.deb ./gcc-4.4_4.4.7-8ubuntu1_amd64.deb ./cpp-4.4_4.4.7-8ubuntu1_amd64.deb ./gcc-4.4-multilib_4.4.7-8ubuntu1_amd64.deb ./lib32gcc1_10.5.0-1ubuntu1~20.04_amd64.deb ./libmpfr4_3.1.2-1_amd64.deb ./multiarch-support_2.27-3ubuntu1.6_amd64.deb
-            } elseif ($script:linux_host -and $script:version -eq "4.6") {
-                sudo apt-get update
-                mkdir install_g++-4.6
-                cd install_g++-4.6/
-                wget http://mirrors.kernel.org/ubuntu/pool/universe/g/gcc-4.6/g++-4.6_4.6.4-6ubuntu2_amd64.deb
-                wget http://mirrors.kernel.org/ubuntu/pool/universe/g/gcc-4.6/libstdc++6-4.6-dev_4.6.4-6ubuntu2_amd64.deb
-                wget http://mirrors.kernel.org/ubuntu/pool/universe/g/gcc-4.6/gcc-4.6-base_4.6.4-6ubuntu2_amd64.deb
-                wget http://mirrors.kernel.org/ubuntu/pool/universe/g/gcc-4.6/gcc-4.6_4.6.4-6ubuntu2_amd64.deb
-                wget http://mirrors.kernel.org/ubuntu/pool/universe/g/gcc-4.6/cpp-4.6_4.6.4-6ubuntu2_amd64.deb
-                wget https://mirrors.edge.kernel.org/ubuntu/pool/main/m/mpfr4/libmpfr4_3.1.2-1_amd64.deb
-                wget https://mirrors.edge.kernel.org/ubuntu/pool/main/g/glibc/multiarch-support_2.27-3ubuntu1.6_amd64.deb
-                sudo apt-get install ./g++-4.6_4.6.4-6ubuntu2_amd64.deb ./libstdc++6-4.6-dev_4.6.4-6ubuntu2_amd64.deb ./gcc-4.6-base_4.6.4-6ubuntu2_amd64.deb ./gcc-4.6_4.6.4-6ubuntu2_amd64.deb ./cpp-4.6_4.6.4-6ubuntu2_amd64.deb ./libmpfr4_3.1.2-1_amd64.deb ./multiarch-support_2.27-3ubuntu1.6_amd64.deb
-            } elseif ($script:linux_host -and $script:version -eq "4.8") {
-                sudo apt-get update
-                mkdir install_g++-4.8
-                cd install_g++-4.8/
-                wget http://mirrors.kernel.org/ubuntu/pool/universe/g/gcc-4.8/g++-4.8_4.8.5-4ubuntu8_amd64.deb
-                wget http://mirrors.kernel.org/ubuntu/pool/universe/g/gcc-4.8/libstdc++-4.8-dev_4.8.5-4ubuntu8_amd64.deb
-                wget http://mirrors.kernel.org/ubuntu/pool/universe/g/gcc-4.8/gcc-4.8-base_4.8.5-4ubuntu8_amd64.deb
-                wget http://mirrors.kernel.org/ubuntu/pool/universe/g/gcc-4.8/gcc-4.8_4.8.5-4ubuntu8_amd64.deb
-                wget http://mirrors.kernel.org/ubuntu/pool/universe/g/gcc-4.8/libgcc-4.8-dev_4.8.5-4ubuntu8_amd64.deb
-                wget http://mirrors.kernel.org/ubuntu/pool/universe/g/gcc-4.8/cpp-4.8_4.8.5-4ubuntu8_amd64.deb
-                wget http://mirrors.kernel.org/ubuntu/pool/universe/g/gcc-4.8/libasan0_4.8.5-4ubuntu8_amd64.deb
-                sudo apt-get install ./gcc-4.8_4.8.5-4ubuntu8_amd64.deb ./gcc-4.8-base_4.8.5-4ubuntu8_amd64.deb ./libstdc++-4.8-dev_4.8.5-4ubuntu8_amd64.deb ./cpp-4.8_4.8.5-4ubuntu8_amd64.deb ./libgcc-4.8-dev_4.8.5-4ubuntu8_amd64.deb ./libasan0_4.8.5-4ubuntu8_amd64.deb ./g++-4.8_4.8.5-4ubuntu8_amd64.deb
-            } elseif ($script:linux_host -and $script:version -eq "5" -and $VERSION_ID -eq "22.04") {
-                sudo apt-get update
-                mkdir install_g++-5
-                cd install_g++-5/
-                wget http://mirrors.kernel.org/ubuntu/pool/universe/g/gcc-5/g++-5_5.5.0-12ubuntu1_amd64.deb
-                wget http://mirrors.kernel.org/ubuntu/pool/universe/g/gcc-5/libstdc++-5-dev_5.5.0-12ubuntu1_amd64.deb
-                wget http://mirrors.kernel.org/ubuntu/pool/universe/g/gcc-5/gcc-5-base_5.5.0-12ubuntu1_amd64.deb
-                wget http://mirrors.kernel.org/ubuntu/pool/universe/g/gcc-5/gcc-5_5.5.0-12ubuntu1_amd64.deb
-                wget http://mirrors.kernel.org/ubuntu/pool/universe/g/gcc-5/libgcc-5-dev_5.5.0-12ubuntu1_amd64.deb
-                wget http://mirrors.kernel.org/ubuntu/pool/universe/g/gcc-5/cpp-5_5.5.0-12ubuntu1_amd64.deb
-                wget http://mirrors.kernel.org/ubuntu/pool/universe/g/gcc-5/libasan2_5.5.0-12ubuntu1_amd64.deb
-                wget https://mirrors.edge.kernel.org/ubuntu/pool/universe/g/gcc-7/libubsan0_7.5.0-6ubuntu2_amd64.deb
-                wget https://mirrors.edge.kernel.org/ubuntu/pool/universe/g/gcc-7/libcilkrts5_7.5.0-6ubuntu2_amd64.deb
-                wget https://mirrors.edge.kernel.org/ubuntu/pool/universe/g/gcc-7/gcc-7-base_7.5.0-6ubuntu2_amd64.deb
-                wget https://mirrors.edge.kernel.org/ubuntu/pool/universe/i/isl-0.18/libisl15_0.18-4_amd64.deb
-                wget https://mirrors.edge.kernel.org/ubuntu/pool/universe/g/gcc-5/libmpx0_5.5.0-12ubuntu1_amd64.deb
-                sudo apt-get install ./gcc-5_5.5.0-12ubuntu1_amd64.deb ./gcc-5-base_5.5.0-12ubuntu1_amd64.deb ./libstdc++-5-dev_5.5.0-12ubuntu1_amd64.deb ./cpp-5_5.5.0-12ubuntu1_amd64.deb ./libgcc-5-dev_5.5.0-12ubuntu1_amd64.deb ./libasan2_5.5.0-12ubuntu1_amd64.deb ./g++-5_5.5.0-12ubuntu1_amd64.deb ./libubsan0_7.5.0-6ubuntu2_amd64.deb ./libcilkrts5_7.5.0-6ubuntu2_amd64.deb ./gcc-7-base_7.5.0-6ubuntu2_amd64.deb ./libisl15_0.18-4_amd64.deb ./libmpx0_5.5.0-12ubuntu1_amd64.deb
-            } elseif ($script:linux_host -and $script:version -eq "6" -and $VERSION_ID -eq "22.04") {
-                sudo apt-get update
-                mkdir install_g++-6
-                cd install_g++-6/
-                wget http://mirrors.kernel.org/ubuntu/pool/universe/g/gcc-6/g++-6_6.4.0-17ubuntu1_amd64.deb
-                wget http://mirrors.kernel.org/ubuntu/pool/universe/g/gcc-6/libstdc++-6-dev_6.4.0-17ubuntu1_amd64.deb
-                wget http://mirrors.kernel.org/ubuntu/pool/universe/g/gcc-6/gcc-6-base_6.4.0-17ubuntu1_amd64.deb
-                wget http://mirrors.kernel.org/ubuntu/pool/universe/g/gcc-6/gcc-6_6.4.0-17ubuntu1_amd64.deb
-                wget http://mirrors.kernel.org/ubuntu/pool/universe/g/gcc-6/libgcc-6-dev_6.4.0-17ubuntu1_amd64.deb
-                wget http://mirrors.kernel.org/ubuntu/pool/universe/g/gcc-6/cpp-6_6.4.0-17ubuntu1_amd64.deb
-                wget http://mirrors.kernel.org/ubuntu/pool/universe/g/gcc-6/libasan3_6.4.0-17ubuntu1_amd64.deb
-                wget https://mirrors.edge.kernel.org/ubuntu/pool/universe/g/gcc-7/gcc-7-base_7.5.0-6ubuntu2_amd64.deb
-                wget https://mirrors.edge.kernel.org/ubuntu/pool/universe/g/gcc-7/libubsan0_7.5.0-6ubuntu2_amd64.deb
-                wget https://mirrors.edge.kernel.org/ubuntu/pool/universe/g/gcc-7/libcilkrts5_7.5.0-6ubuntu2_amd64.deb
-                wget http://mirrors.kernel.org/ubuntu/pool/main/i/isl/libisl19_0.19-1_amd64.deb
-                wget http://mirrors.kernel.org/ubuntu/pool/main/i/isl/libisl22_0.22.1-1_amd64.deb
-                wget http://mirrors.kernel.org/ubuntu/pool/main/g/gcc-8/gcc-8-base_8.4.0-1ubuntu1~18.04_amd64.deb
-                wget http://mirrors.kernel.org/ubuntu/pool/main/g/gcc-8/libmpx2_8.4.0-1ubuntu1~18.04_amd64.deb
-                sudo apt-get install ./g++-6_6.4.0-17ubuntu1_amd64.deb ./libstdc++-6-dev_6.4.0-17ubuntu1_amd64.deb ./gcc-6-base_6.4.0-17ubuntu1_amd64.deb ./gcc-6_6.4.0-17ubuntu1_amd64.deb ./libgcc-6-dev_6.4.0-17ubuntu1_amd64.deb ./cpp-6_6.4.0-17ubuntu1_amd64.deb ./libasan3_6.4.0-17ubuntu1_amd64.deb ./gcc-7-base_7.5.0-6ubuntu2_amd64.deb ./libubsan0_7.5.0-6ubuntu2_amd64.deb ./libcilkrts5_7.5.0-6ubuntu2_amd64.deb ./libisl19_0.19-1_amd64.deb ./gcc-8-base_8.4.0-1ubuntu1~18.04_amd64.deb ./libmpx2_8.4.0-1ubuntu1~18.04_amd64.deb
-            } elseif ($script:linux_host -and $script:version -eq "7" -and $VERSION_ID -eq "22.04") {
-                sudo apt-get update
-                mkdir install_g++-7
-                cd install_g++-7/
-                wget http://mirrors.kernel.org/ubuntu/pool/universe/g/gcc-7/g++-7_7.5.0-6ubuntu2_amd64.deb
-                wget http://mirrors.kernel.org/ubuntu/pool/universe/g/gcc-7/libstdc++-7-dev_7.5.0-6ubuntu2_amd64.deb
-                wget http://mirrors.kernel.org/ubuntu/pool/universe/g/gcc-7/gcc-7-base_7.5.0-6ubuntu2_amd64.deb
-                wget http://mirrors.kernel.org/ubuntu/pool/universe/g/gcc-7/gcc-7_7.5.0-6ubuntu2_amd64.deb
-                wget http://mirrors.kernel.org/ubuntu/pool/universe/g/gcc-7/libgcc-7-dev_7.5.0-6ubuntu2_amd64.deb
-                wget http://mirrors.kernel.org/ubuntu/pool/universe/g/gcc-7/cpp-7_7.5.0-6ubuntu2_amd64.deb
-                wget http://mirrors.kernel.org/ubuntu/pool/universe/g/gcc-7/libasan4_7.5.0-6ubuntu2_amd64.deb
-                wget http://mirrors.kernel.org/ubuntu/pool/universe/g/gcc-7/libubsan0_7.5.0-6ubuntu2_amd64.deb
-                wget http://mirrors.kernel.org/ubuntu/pool/universe/g/gcc-7/libcilkrts5_7.5.0-6ubuntu2_amd64.deb
-                wget http://mirrors.kernel.org/ubuntu/pool/universe/g/gcc-7/gcc-7-base_7.5.0-6ubuntu2_amd64.deb
-                wget http://mirrors.kernel.org/ubuntu/pool/main/i/isl/libisl22_0.22.1-1_amd64.deb
-                wget http://mirrors.kernel.org/ubuntu/pool/main/g/gcc-8/gcc-8-base_8.4.0-1ubuntu1~18.04_amd64.deb
-                wget http://mirrors.kernel.org/ubuntu/pool/main/g/gcc-8/libmpx2_8.4.0-1ubuntu1~18.04_amd64.deb
-                sudo apt-get install ./g++-7_7.5.0-6ubuntu2_amd64.deb ./libstdc++-7-dev_7.5.0-6ubuntu2_amd64.deb ./gcc-7-base_7.5.0-6ubuntu2_amd64.deb ./gcc-7_7.5.0-6ubuntu2_amd64.deb ./libgcc-7-dev_7.5.0-6ubuntu2_amd64.deb ./cpp-7_7.5.0-6ubuntu2_amd64.deb ./libasan4_7.5.0-6ubuntu2_amd64.deb ./libubsan0_7.5.0-6ubuntu2_amd64.deb ./libcilkrts5_7.5.0-6ubuntu2_amd64.deb ./gcc-7-base_7.5.0-6ubuntu2_amd64.deb ./libisl22_0.22.1-1_amd64.deb ./gcc-8-base_8.4.0-1ubuntu1~18.04_amd64.deb ./libmpx2_8.4.0-1ubuntu1~18.04_amd64.deb
-            } elseif ($script:linux_host -and $script:version -eq "8" -and $VERSION_ID -eq "22.04") {
-                sudo apt-get update
-                mkdir install_g++-8
-                cd install_g++-8/
-                wget https://old-releases.ubuntu.com/ubuntu/pool/universe/g/gcc-8/g++-8_8.4.0-7ubuntu3_amd64.deb
-                wget https://old-releases.ubuntu.com/ubuntu/pool/universe/g/gcc-8/libstdc++-8-dev_8.4.0-7ubuntu3_amd64.deb
-                wget https://old-releases.ubuntu.com/ubuntu/pool/universe/g/gcc-8/gcc-8-base_8.4.0-7ubuntu3_amd64.deb
-                wget https://old-releases.ubuntu.com/ubuntu/pool/universe/g/gcc-8/gcc-8_8.4.0-7ubuntu3_amd64.deb
-                wget https://old-releases.ubuntu.com/ubuntu/pool/universe/g/gcc-8/libgcc-8-dev_8.4.0-7ubuntu3_amd64.deb
-                wget https://old-releases.ubuntu.com/ubuntu/pool/universe/g/gcc-8/cpp-8_8.4.0-7ubuntu3_amd64.deb
-                # Cannot find version 8.4.0 of libubsan1
-                wget https://old-releases.ubuntu.com/ubuntu/pool/universe/g/gcc-8/libubsan1-dbg_8.2.0-7ubuntu1_amd64.deb
-                wget https://old-releases.ubuntu.com/ubuntu/pool/universe/g/gcc-8/libmpx2_8.4.0-7ubuntu3_amd64.deb
-                wget http://mirrors.kernel.org/ubuntu/pool/main/i/isl/libisl22_0.22.1-1_amd64.deb
-                sudo apt-get install ./g++-8_8.4.0-7ubuntu3_amd64.deb ./libstdc++-8-dev_8.4.0-7ubuntu3_amd64.deb ./gcc-8-base_8.4.0-7ubuntu3_amd64.deb ./gcc-8_8.4.0-7ubuntu3_amd64.deb ./libgcc-8-dev_8.4.0-7ubuntu3_amd64.deb ./cpp-8_8.4.0-7ubuntu3_amd64.deb ./libubsan1-dbg_8.2.0-7ubuntu1_amd64.deb ./libmpx2_8.4.0-7ubuntu3_amd64.deb ./libisl22_0.22.1-1_amd64.deb
-            } elseif ($script:linux_host) {
                 sudo apt-get update
                 sudo DEBIAN_FRONTEND=noninteractive apt-get install -yq --no-install-recommends $Packages
             } elseif ($script:cygwin_host) {
@@ -242,7 +260,8 @@ runs:
         echo "gxx=$gxx" >> $env:GITHUB_OUTPUT
       shell: pwsh
 
-    - run: |
+    - if: ${{ ! (inputs.version <= 8) }}
+      run: |
         New-Variable os -Value '${{ runner.os }}' -Option Constant
 
         New-Variable linux_host -Value ($os -eq 'Linux') -Option Constant
@@ -288,7 +307,8 @@ runs:
         }
       shell: pwsh
 
-    - run: |
+    - if: ${{ ! (inputs.version <= 8) }}
+      run: |
         New-Variable cygwin_host -Value ('${{ inputs.cygwin }}' -eq '1') -Option Constant
         New-Variable hardlinks -Value ('${{ inputs.hardlinks }}' -eq '1') -Option Constant
 

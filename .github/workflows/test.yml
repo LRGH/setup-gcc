@@ -20,7 +20,6 @@ jobs:
           - {os: ubuntu-22.04, version: 8}
           - {os: ubuntu-22.04, version: 4.4}
           - {os: ubuntu-22.04, version: 4.6}
-          - {platform: x86, version: 4.6}
           - {platform: x86, version: 4.8}
           - {platform: x86, version: 5}
           - {platform: x86, version: 6}
@@ -44,13 +43,21 @@ jobs:
         with:
           version: '${{ matrix.version }}'
           platform: '${{ matrix.platform }}'
-          cc: 1
-      - name: Build and run minimal program
+      - name: Build and run minimal C program
         run: |
           gcc --version
           echo 'int main() { return 0; }' > a.c
           if test 'x86' = $PLATFORM; then flags=-m32; else flags=; fi
           gcc $flags -o a.out a.c
+          file a.out
+          ./a.out
+      - name: Build and run minimal C++ program
+        if: ${{ matrix.platform != 'x86' }}
+        run: |
+          gcc --version
+          echo 'int main() { return 0; }' > a.c
+          if test 'x86' = $PLATFORM; then flags=-m32; else flags=; fi
+          g++ $flags -o a.out a.c
           file a.out
           ./a.out
       - name: Build and test zlib 1.2.8
@@ -72,7 +79,7 @@ jobs:
     name: 'Test: ${{ matrix.os }} / ${{ matrix.platform }}'
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Set up GCC
         uses: ./
         with:

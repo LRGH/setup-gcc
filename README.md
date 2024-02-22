@@ -3,32 +3,22 @@ Set up GCC
 
 [![Test](https://github.com/LRGH/setup-gcc/actions/workflows/test.yml/badge.svg)](https://github.com/LRGH/setup-gcc/actions/workflows/test.yml)
 
-This GitHub action sets up GCC in your workflow run.
+This GitHub action sets up a specific version of GCC as the default compiler in your workflow.
 
-1. Installs either 32-bit or 64-bit GCC on either Ubuntu or Cygwin.
-2. Specify a version to install using the `version` parameter.
+1. Installs both `gcc` and `g++`, with multilib support for `gcc`
+2. Can also be used to install Cygwin (work in progress), as an alternative to egor-tensin action [setup-cygwin]
 3. For installing GCC on Windows please see egor-tensin action [setup-mingw].
+
+[setup-cygwin]: https://github.com/egor-tensin/setup-cygwin
 
 [setup-mingw]: https://github.com/egor-tensin/setup-mingw
 
 Use it in your workflow like this:
 
     - name: Set up GCC
-      uses: LRGH/setup-gcc@v1
+      uses: LRGH/setup-gcc@v2
       with:
-        version: latest
-        platform: x64
-
-* `latest` is the default value for the `version` parameter and can be omitted.
-* `x64` is the default value for the `platform` parameter and can be omitted.
-Use `x86` if you want to build 32-bit binaries.
-* Set the `cygwin` parameter to `1` to set up GCC inside an existing Cygwin
-installation (you can set up Cygwin itself using egor-tensin action [setup-cygwin]).
-* `cc` and `c++` executables are set up, pointing to the `gcc` and `g++`
-executables.
-Disable this by setting the `cc` parameter to `0`.
-
-[setup-cygwin]: https://github.com/egor-tensin/setup-cygwin
+        version: 7
 
 API
 ---
@@ -49,19 +39,14 @@ API
 Supported versions
 ------------------
 
-Unless the `version` parameter value is "latest", the ubuntu-toolchain-r/test
-PPA is used to make more versions available.
-You can pass the version number as the `version` parameter value (`4.8`, `8`,
-`9`, etc.), and this action will install the corresponding packages.
+Differing from the original action by egor-tensin [setup-gcc], we don't rely on what is made available in Ubuntu's PPA, because most old versions of gcc are missing.
+Packages are manually installed.
 
-The `version` parameter value is not checked for being an available version for
-the current distribution.
-The supported versions for a particular distribution are those found in that
-distro's repositories & those in the PPA.
-For example, you can find the list of available versions as of January 2024
-below.
+[setup-gcc]: https://github.com/egor-tensin/setup-gcc
 
-| `version` |  Focal | Jammy
+Available versions are:
+
+| `version` |  20.04 | 22.04
 | --------- |  ----- | -----
 | 4.4       |  ✓     |
 | 4.6       |  ✓     |
@@ -75,10 +60,6 @@ below.
 | 11        |  ✓     | ✓
 | 12        |        | ✓
 | 13        |        | ✓
-
-This table should be updated periodically; it's a work-in-progress.
-
-On Cygwin, the `version` parameter is ignored.
 
 License
 -------
