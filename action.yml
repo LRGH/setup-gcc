@@ -219,30 +219,44 @@ runs:
         sudo ln -fs `which gcc-${{ inputs.version }}` /usr/local/bin/gcc
         sudo ln -fs `which g++-${{ inputs.version }}` /usr/local/bin/g++
 
-    # Cannot find the required dependencies
-    - if: false # ${{ runner.os == 'Linux' && inputs.version == '8' }}
+    - if: ${{ runner.os == 'Linux' && inputs.version == '8' }}
       shell: bash
       run: |
         sudo apt-get update
         mkdir install-gcc-${{ inputs.version }}
         cd install-gcc-${{ inputs.version }}
-        wget https://old-releases.ubuntu.com/ubuntu/pool/universe/g/gcc-8/g++-8_8.4.0-7ubuntu3_amd64.deb
-        wget https://old-releases.ubuntu.com/ubuntu/pool/universe/g/gcc-8/libstdc++-8-dev_8.4.0-7ubuntu3_amd64.deb
-        wget https://old-releases.ubuntu.com/ubuntu/pool/universe/g/gcc-8/gcc-8-base_8.4.0-7ubuntu3_amd64.deb
-        wget https://old-releases.ubuntu.com/ubuntu/pool/universe/g/gcc-8/gcc-8_8.4.0-7ubuntu3_amd64.deb
-        wget https://old-releases.ubuntu.com/ubuntu/pool/universe/g/gcc-8/libgcc-8-dev_8.4.0-7ubuntu3_amd64.deb
-        wget https://old-releases.ubuntu.com/ubuntu/pool/universe/g/gcc-8/cpp-8_8.4.0-7ubuntu3_amd64.deb
-        wget http://archive.ubuntu.com/ubuntu/pool/main/g/glibc/libc6_2.35-0ubuntu3_amd64.deb
-        # Cannot find version 8.4.0 of libubsan1
-        wget https://old-releases.ubuntu.com/ubuntu/pool/universe/g/gcc-8/libubsan1-dbg_8.2.0-7ubuntu1_amd64.deb
-        wget https://old-releases.ubuntu.com/ubuntu/pool/universe/g/gcc-8/libmpx2_8.4.0-7ubuntu3_amd64.deb
+        sudo apt-get update
+        # INSTALL GCC
+        wget http://mirrors.kernel.org/ubuntu/pool/universe/g/gcc-8/gcc-8_8.4.0-3ubuntu2_amd64.deb
+        wget http://mirrors.kernel.org/ubuntu/pool/universe/g/gcc-8/gcc-8-base_8.4.0-3ubuntu2_amd64.deb
+        wget http://mirrors.kernel.org/ubuntu/pool/universe/g/gcc-8/libgcc-8-dev_8.4.0-3ubuntu2_amd64.deb
+        wget http://mirrors.kernel.org/ubuntu/pool/universe/g/gcc-8/cpp-8_8.4.0-3ubuntu2_amd64.deb
+        wget http://mirrors.kernel.org/ubuntu/pool/universe/g/gcc-8/libmpx2_8.4.0-3ubuntu2_amd64.deb
         wget http://mirrors.kernel.org/ubuntu/pool/main/i/isl/libisl22_0.22.1-1_amd64.deb
-        wget http://mirrors.kernel.org/ubuntu/pool/main/i/isl/libisl23_0.26-3_amd64.deb
-        sudo apt-get install ./g++-8_8.4.0-7ubuntu3_amd64.deb ./libstdc++-8-dev_8.4.0-7ubuntu3_amd64.deb ./gcc-8-base_8.4.0-7ubuntu3_amd64.deb ./gcc-8_8.4.0-7ubuntu3_amd64.deb ./libgcc-8-dev_8.4.0-7ubuntu3_amd64.deb ./cpp-8_8.4.0-7ubuntu3_amd64.deb ./libc6_2.35-0ubuntu3_amd64.deb ./libubsan1-dbg_8.2.0-7ubuntu1_amd64.deb ./libmpx2_8.4.0-7ubuntu3_amd64.deb ./libisl22_0.22.1-1_amd64.deb ./libisl23_0.26-3_amd64.deb
+        wget http://mirrors.kernel.org/ubuntu/pool/universe/g/gcc-8/lib32mpx2_8.4.0-3ubuntu2_amd64.deb
+        sudo apt-get install ./libisl22_0.22.1-1_amd64.deb ./libmpx2_8.4.0-3ubuntu2_amd64.deb ./cpp-8_8.4.0-3ubuntu2_amd64.deb ./libgcc-8-dev_8.4.0-3ubuntu2_amd64.deb ./gcc-8-base_8.4.0-3ubuntu2_amd64.deb ./gcc-8_8.4.0-3ubuntu2_amd64.deb ./lib32mpx2_8.4.0-3ubuntu2_amd64.deb
+        # INSTALL G++
+        wget http://mirrors.kernel.org/ubuntu/pool/universe/g/gcc-8/libstdc++-8-dev_8.4.0-3ubuntu2_amd64.deb
+        wget http://mirrors.kernel.org/ubuntu/pool/universe/g/gcc-8/g++-8_8.4.0-3ubuntu2_amd64.deb
+        sudo apt-get install ./libstdc++-8-dev_8.4.0-3ubuntu2_amd64.deb ./g++-8_8.4.0-3ubuntu2_amd64.deb
+        if test ${{ inputs.platform }} = x86; then
+        # INSTALL GCC MULTILIB
+          wget http://mirrors.kernel.org/ubuntu/pool/universe/g/gcc-8/gcc-8-multilib_8.4.0-3ubuntu2_amd64.deb
+          wget http://mirrors.kernel.org/ubuntu/pool/universe/g/gcc-8/lib32gcc-8-dev_8.4.0-3ubuntu2_amd64.deb
+          wget http://mirrors.kernel.org/ubuntu/pool/universe/g/gcc-8/libx32gcc-8-dev_8.4.0-3ubuntu2_amd64.deb
+          sudo apt-get install ./gcc-8-multilib_8.4.0-3ubuntu2_amd64.deb ./lib32gcc-8-dev_8.4.0-3ubuntu2_amd64.deb ./libx32gcc-8-dev_8.4.0-3ubuntu2_amd64.deb
+          # Cf. https://stackoverflow.com/questions/14795608/asm-errno-h-no-such-file-or-directory
+          sudo ln -s /usr/include/asm-generic /usr/include/asm
+          # INSTALL G++ MULTILIB
+          wget http://mirrors.kernel.org/ubuntu/pool/universe/g/gcc-8/g++-8-multilib_8.4.0-3ubuntu2_amd64.deb
+          wget http://mirrors.kernel.org/ubuntu/pool/universe/g/gcc-8/lib32stdc++-8-dev_8.4.0-3ubuntu2_amd64.deb
+          wget http://mirrors.kernel.org/ubuntu/pool/universe/g/gcc-8/libx32stdc++-8-dev_8.4.0-3ubuntu2_amd64.deb
+          sudo apt-get install ./g++-8-multilib_8.4.0-3ubuntu2_amd64.deb ./lib32stdc++-8-dev_8.4.0-3ubuntu2_amd64.deb ./libx32stdc++-8-dev_8.4.0-3ubuntu2_amd64.deb
+        fi
         sudo ln -fs `which gcc-${{ inputs.version }}` /usr/local/bin/gcc
         sudo ln -fs `which g++-${{ inputs.version }}` /usr/local/bin/g++
 
-    - if: ${{ ! (inputs.version <= 7) }}
+    - if: ${{ ! (inputs.version <= 8) }}
       id: install
       run: |
         New-Variable os -Value '${{ runner.os }}' -Option Constant
@@ -301,6 +315,7 @@ runs:
             }
             $pkg += '-multilib'
             Install-Package $pkg
+            sudo ln -s /usr/include/asm-generic /usr/include/asm
         } elseif ($cygwin_host) {
             if (!$x64) {
                 echo @'
@@ -332,7 +347,7 @@ runs:
         echo "gxx=$gxx" >> $env:GITHUB_OUTPUT
       shell: pwsh
 
-    - if: ${{ ! (inputs.version <= 7) }}
+    - if: ${{ ! (inputs.version <= 8) }}
       run: |
         New-Variable os -Value '${{ runner.os }}' -Option Constant
 
@@ -379,7 +394,7 @@ runs:
         }
       shell: pwsh
 
-    - if: ${{ ! (inputs.version <= 7) }}
+    - if: ${{ ! (inputs.version <= 8) }}
       run: |
         New-Variable cygwin_host -Value ('${{ inputs.cygwin }}' -eq '1') -Option Constant
         New-Variable hardlinks -Value ('${{ inputs.hardlinks }}' -eq '1') -Option Constant

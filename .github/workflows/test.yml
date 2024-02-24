@@ -17,7 +17,6 @@ jobs:
           - {os: ubuntu-18.04, version: 13}
           - {os: ubuntu-20.04, version: 12}
           - {os: ubuntu-20.04, version: 13}
-          - {os: ubuntu-22.04, version: 8}
           - {os: ubuntu-22.04, version: 4.4}
           - {os: ubuntu-22.04, version: 4.6}
           - {os: ubuntu-22.04, version: 4.8, platform: x86}
@@ -44,7 +43,7 @@ jobs:
           file a.out
           ./a.out
       - name: Build and run minimal C++ program
-        if: ${{ matrix.platform == 'x64' }}
+        if: ${{ matrix.platform == 'x64' || ! (matrix.version < 8) }}
         run: |
           gcc --version
           echo 'int main() { return 0; }' > a.c
@@ -53,7 +52,6 @@ jobs:
           file a.out
           ./a.out
       - name: Build and test zlib 1.2.8
-        if: ${{ matrix.platform == 'x64' || matrix.version < 8 }}
         run: |
           curl -O https://zlib.net/fossils/zlib-1.2.8.tar.gz
           tar xzf zlib-1.2.8.tar.gz
